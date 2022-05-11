@@ -1,0 +1,117 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-04-13 10:30:39
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+  </div>
+</body>
+
+</html>
+<script type="module">
+
+  import * as d3 from 'https://cdn.skypack.dev/d3@7';
+  function showData(dataList) {
+    const w = 1200;
+    const h = 500;
+    const padding = 50;
+    const step = 30;
+    const yScale = d3.scaleLinear();
+    yScale.domain([0, d3.max(dataList, d => d[1])])
+      .range([h - padding, padding]);
+    const xScale = d3.scaleLinear();
+    xScale.domain([0, dataList.length * step])
+      .range([padding, w - padding]);
+    const tooltip = d3.select('body')
+      .append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0);
+    const svg = d3.select('body')
+      .append('svg')
+      .attr('width', w)
+      .attr('height', h)
+      .attr('padding', padding)
+      .attr('id', 'title');
+
+    svg.selectAll('rect')
+      .data(dataList)
+      .enter()
+      .append('rect')
+      .attr('class', 'bar')
+      .attr('x', (d, i) => xScale(i * step))
+      .attr('y', d => yScale(d[1]))
+      .attr('width', xScale(step - 10) - padding)
+      .attr('height', d => h - padding - yScale(d[1]))
+      .attr('data-date', d => d[0])
+      .attr('data-gdp', d => d[1])
+      .on('mouseover', (e, d) => {
+        tooltip.transition()
+          .duration(200)
+          .style('opacity', 0.9);
+
+        tooltip.attr('data-date', d[0])
+          .html(`${d[0]}<br />${d[1]}`)
+          .style('left', `${e.pageX}px`)
+          .style('top', `${e.pageY - 35}px`);
+      })
+      .on('mouseout', () => {
+        tooltip.transition()
+          .duration(200)
+          .style('opacity', 0);
+
+        tooltip.attr('data-date', null);
+      })
+    ;
+    const xAxis = d3.axisBottom(xScale);
+    const yAxis = d3.axisLeft(yScale);
+  
+
+    svg.append('g')
+      .attr('class', 'tick')
+      .attr('id', 'x-axis')
+      .attr('transform', `translate(0, ${h - padding})`)
+      .call(xAxis);
+    svg.append('g')
+      .attr('class', 'tick')
+      .attr('id', 'y-axis')
+      .attr('transform', `translate(${padding}, 0)`)
+      .call(yAxis);
+  };
+
+  document.addEventListener('DOMContentLoaded', () =>  {
+    const req = new XMLHttpRequest();
+    req.open('GET', 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json', true);
+    req.send();
+    req.onload = function () {
+      const json = JSON.parse(req.responseText);
+      const dataList = json.data;
+      showData(dataList);
+    };
+  });
+  </script>
+<style>
+  div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 100px;
+    height: 35px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+  }
+</style>

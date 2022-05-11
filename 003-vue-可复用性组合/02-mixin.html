@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <!-- <hello-com></hello-com> -->
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+  console.clear();
+  const myMixin = {
+    data() {
+      return {
+        message: 'hello msg!',
+        foo: 'abc',
+      };
+    },
+    created() {
+      this.hello();
+    },
+    methods: {
+      hello() {
+        console.log('hello form mixin!');
+      },
+    },
+  };
+  const myMixin2 = {
+    data() {
+      return {
+        message: 'hello msg!',
+        foo: 'abc',
+      };
+    },
+    created() {
+      this.hello2();
+    },
+    methods: {
+      hello2() {
+        console.log('hello form mixin2!');
+      },
+    },
+  };
+  // const Component = Vue.extend({
+  //   mixins: [myMixin],
+  // });
+  // const component = new Component();
+  // Vue.component('hello-com', component);
+  Vue.mixin({
+    created() {
+      const { myOption } = this.$options;
+      if (myOption) {
+        console.log(myOption);
+      }
+    },
+});
+Vue.config.optionMergeStrategies.myOption = function (toVal, fromVal) {
+  console.log('toVal,fromVal :>> ', toVal, ',', fromVal);
+  // 返回合并后的值
+};
+  const app = new Vue({
+    mixins: [myMixin, myMixin2],
+
+    el: '#app',
+    data: {},
+    myOption: 'myoption:hello',
+    created() {
+      console.log('组件钩子被调用');
+  },
+  });
+</script>

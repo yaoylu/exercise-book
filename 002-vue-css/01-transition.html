@@ -1,0 +1,102 @@
+<!--
+ * @Description: 
+ * @Author: alysalu@tencent.com
+ * @Date: 2022-02-19 15:18:26
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <custom-input :value="searchText" @input="(value)=>{this.searchText = value}">gs</custom-input>
+    <custom-input v-model="searchText">cc</custom-input>
+    <label for=""></label>
+    <p>{{searchText}}</p>
+    <div id="demo">
+      <button v-on:click="show = !show">
+        Toggle
+      </button>
+      <transition name="fade">
+        <p v-if="show">hello</p>
+      </transition>
+      <transition name="good">
+        <p v-if="show">good</p>
+      </transition>
+      <transition name="move">
+        <p v-if="show">move</p>
+      </transition> 
+      <transition name="bounce">
+        <p v-if="show">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.</p>
+      </transition> 
+    </div>
+  </div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
+<script>
+  Vue.component('custom-input', {
+    // todo-item 组件现在接受一个
+    // "prop"，类似于一个自定义 attribute。
+    // 这个 prop 名为 todo。
+    props: ['value'],
+    template: `<div>
+      <label for="good"><slot></slot></label>
+      <input :value="value" id="good" @input="$emit('input',$event.target.value)">
+      <div>`,
+  });
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      searchText: 'ts',
+      show:false
+    },
+    // components:[CustomInput]
+  });
+</script>
+<style>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+.good-enter,.good-leave-to{
+  opacity: 0;
+}
+.good-enter-active, .good-leave-active{
+  transition:opacity 2s;
+}
+.move-enter,.move-leave-to{
+  transform: translateX(10px);
+  opacity: 0;
+}
+.move-enter-active, .move-leave-active{
+  transition:all 2s;
+}
+.bounce-enter-active {
+  animation: bounce-in .5s;
+}
+.bounce-leave-active {
+  animation: bounce-in .5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+</style>

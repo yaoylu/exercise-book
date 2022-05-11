@@ -1,0 +1,68 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-04-12 10:02:20
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Markdown</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"
+    integrity="sha512-hzyXu3u+VDu/7vpPjRKFp9w33Idx7pWWNazPm+aCMRu26yZXFCby1gn1JxevVv3LDwnSbyKrvLo3JNdi4Qx1ww=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+  <div id="root"></div>
+  <script type="text/babel">
+    function createMarkup(htmlString) {
+      return {__html: htmlString};
+    }
+    class Editor extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { input:''};
+        this.handleChange = this.handleChange.bind(this);
+      }
+
+      handleChange (e) {
+        this.setState({ input: e.target.value });
+      }
+      render () {
+        return (
+          <div>
+            <textarea id="editor"  onChange={this.handleChange} value={this.state.input} />
+            <div id="preview" dangerouslySetInnerHTML={createMarkup(marked.parse(this.state.input))}/>
+          </div>
+        );
+      }
+    }
+
+  
+
+    function App () {
+      return (
+        <div>
+          <Editor />
+        </div>
+      )
+    }
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root')
+    );
+
+  </script>
+
+</body>
+
+</html>

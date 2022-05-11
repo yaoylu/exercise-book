@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <base-checkbox id="love" v-model="lovingVue"></base-checkbox>
+    <label for="love">{{lovingVue}}</label>
+    <br>
+    <base-input id="hateVue" label="hateVue" v-model="hateVue" @focus="onFocus"></base-input>
+    <text-document :title="doc.title" @update:title="doc.title = $event"></text-document>
+  </div>
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script>
+  console.clear();
+  Vue.component('base-checkbox', {
+    model: {
+      prop: 'checked',
+      event: 'change',
+    },
+    props: {
+      checked: Boolean,
+    },
+    template: '<input type="checkbox" :checked="checked" @change="$emit(\'change\',$event.target.checked)">',
+  });
+  Vue.component('base-input', {
+    // model: {
+    //   prop: 'value',
+    //   event: 'input',
+    // },
+    props: ['value', 'label'],
+    template: `
+      <label for="hateVue">
+        {{label}}
+        <input type="text" 
+          :value="value" 
+          v-on="inputListeners">
+        <p>{{value}}</p>
+      </label>`,
+    computed: {
+      inputListeners() {
+        const vm = this;
+        return Object.assign(
+          {},
+          this.$listeners, {
+            input(event) {
+              vm.$emit('input', event.target.value);
+            },
+          },
+        );
+      },
+    },
+  });
+  Vue.component('text-document', {
+    props: ['title'],
+    template: `
+    <label for="x">
+        {{title}}:
+        <input id="x" type="text" 
+          :value="title" 
+          v-on:input="$emit('update:title',$event.target.value)">
+        <p>{{title}}</p>
+      </label>`,
+
+  });
+  const app = new Vue({
+    el: '#app',
+    data: {
+      lovingVue: false,
+      hateVue: '',
+      doc: { title: 'old' },
+    },
+    methods: {
+      onFocus() {
+        console.log(this.hateVue);
+      },
+    },
+
+  });
+</script>

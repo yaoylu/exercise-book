@@ -1,0 +1,67 @@
+<!--
+ * @Description: 
+ * @Author: alysalu@tencent.com
+ * @Date: 2022-02-20 13:35:10
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <counter></counter>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="https://unpkg.com/vuex@2.0.0"></script>
+<script>
+  console.clear();
+  const Counter = {
+    template: '<div>{{count}}</div>',
+    computed: {
+      count() {
+        return this.$store.state.count;
+      },
+    },
+  };
+  const store = new Vuex.Store({
+    state: {
+      count: 0,
+      todos: [
+        { id: 1, text: '...1', done: true },
+        { id: 2, text: '...2', done: false },
+      ],
+    },
+    mutations: {
+      increment(state) {
+        state.count += 1;
+      },
+    },
+    getters: {
+      doneTodos: state => state.todos.filter(todo => todo.done),
+      getTodoById: state => id => state.todos.find(todo => todo.id === id),
+    },
+  });
+  const app = new Vue({
+    el: '#app',
+    store,
+    data: {},
+    components: { Counter },
+    template: `
+    <div class="app">
+      <counter></counter>
+    </div>
+  `,
+  });
+  console.log('store.getters.doneTodos :>> ', store.getters.doneTodos);
+  console.log('store.getters.getTodoById(2) :>> ', JSON.stringify(store.getters.getTodoById(2)));
+</script>

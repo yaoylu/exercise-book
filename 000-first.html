@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+</body>
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+    },
+  });
+</script>
+<style type='text/scss'>
+  @mixin border-stroke($val){
+    @if $val==light {
+      border-stroke:1px solid black;
+    }
+    @else if $val==medium {
+      border-stroke:3px solid black;
+    }
+    @else if $val==heavy {
+      border-stroke:6px solid black;
+    }
+    @else {
+      border-stroke:none;
+    }
+  }
+
+
+  #box {
+    width: 150px;
+    height: 150px;
+    background-color: red;
+    @include border-stroke(medium);
+  }
+</style>

@@ -1,0 +1,148 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-04-12 10:02:20
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Drum Machine</title>
+  <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+  <!-- Don't use this in production: -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    class DrumPad extends React.Component {
+      constructor(props){
+        super(props);
+        this.clickClip = this.clickClip.bind(this);
+      }
+      clickClip(e){
+        const target = e.currentTarget;
+        const audioEle = target.querySelector("audio");
+        this.props.onClick(audioEle.dataset.key);
+      }
+      render(){
+        return (
+          <div id="drum-pad">
+            <audio data-key={this.props.id} src={this.props.src} />
+            <p id={this.props.id} className="clip" >{this.props.id}</p>
+            </div>
+        )
+      }
+    }
+    class DrumMachine extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state={
+          show:'',
+        }
+        this.playSound = this.playSound.bind(this);
+        this.clickKey = this.clickKey.bind(this);
+
+      }
+      playSound(key){
+        const audioEle = document.querySelector(`audio[data-key="${key}"]`);
+        if (!audioEle) return;
+        audioEle.currentTime = 0;
+        audioEle.play();
+        this.setState({
+          show:key
+        })
+      };
+      clickKey(e){
+        if(e.target.id ==='drum') return;
+        let key = e.target.id;
+        if(e.target.id==='drum-pad'){
+          const audioEle = e.target.querySelector("audio");
+          key = audioEle.dataset.key;
+        }
+        this.playSound(key);
+      }
+      componentDidMount() {
+        window.addEventListener('keydown', (e)=>{
+          const key = String.fromCharCode(e.keyCode);
+          this.playSound(key);
+        });
+      }
+      render () {
+        return (
+          <div id="drum-machine">
+            <div id="display">{this.state.show}</div>
+            <div id='drum' onClick={this.clickKey}>
+              <DrumPad id="Q" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+              <DrumPad id="W" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+              <DrumPad id="E" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+              <DrumPad id="A" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+              <DrumPad id="S" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+              <DrumPad id="D" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav"/>
+              <DrumPad id="Z" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+              <DrumPad id="X" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav"/>
+              <DrumPad id="C" src="https://soyaine.github.io/JavaScript30/01%20-%20JavaScript%20Drum%20Kit/sounds/boom.wav" />
+            </div>
+          </div>
+        );
+      }
+    }
+
+  
+
+    function App () {
+      return (
+        <div>
+          <DrumMachine />
+        </div>
+      )
+    }
+    ReactDOM.render(
+      <App />,
+      document.getElementById('root')
+    );
+
+  </script>
+
+</body>
+
+</html>
+<style>
+  #drum-machine{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content:space-around;
+  }
+  #display{
+    width: 100vw;
+    height: 10rem;
+    text-align: center;
+    margin:0 auto;
+    border-radius: 0.5rem;
+    font-size: 10rem;
+  }
+  #drum {
+    width: 100vw;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #drum-pad {
+    width: 10rem;
+    background-color: antiquewhite;
+    text-align: center;
+    margin: 1rem;
+    border: 0.4rem solid black;
+    border-radius: 0.5rem;
+    font-size: 3rem;
+  }
+</style>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">test</div>
+    <ul>
+      <li v-for="i in evenNumbers" :key="i">{{i}}</li>
+    </ul>
+    <ul>
+      <template v-for="item in numbers">
+        <li>{{ item }}</li>
+        <li class="divider" role="presentation"></li>
+      </template>
+    </ul>
+  </div>
+
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      isActive: true,
+      hasError: false,
+      numbers: [1, 2, 3, 4, 5, 6],
+
+    },
+    computed: {
+      evenNumbers() {
+        return this.numbers.filter(number =>  number % 2 === 0);
+      },
+    },
+  });
+  app.numbers.push(12);
+  app.numbers.unshift(22);
+  app.isActive = false;
+  app.hasError = true;
+  // app.numbers = app.numbers.filter(number =>  number > 5);
+</script>

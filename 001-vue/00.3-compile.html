@@ -1,0 +1,276 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-03-07 16:04:41
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-02-21 10:03:35
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>{{title}}</h2>
+    <input v-model="name">  
+    <h1>{{name}}</h1>
+    <button v-on:click="clickMe">click me!</button>
+  </div>
+  <script>
+    console.clear();
+    // Observer
+    function defineReactive(data, key, val) {
+      observe(val); // 递归遍历所有子属性
+      const dep = new Dep();
+      Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get() {
+          if (Dep.target) { // 判断是否需要添加订阅者
+            dep.addSub(Dep.target); // 在这里添加一个订阅者
+          }
+          return val;
+        },
+        set(newVal) {
+          if (val === newVal) {
+            return;
+          }
+          val = newVal;
+          console.log(`属性${key}已经被监听了，现在值为：“${newVal.toString()}”`);
+          dep.notify(); // 如果数据变化，通知所有订阅者
+        },
+      });
+    }
+    Dep.target = null;
+
+
+    function observe(data) {
+      if (!data || typeof data !== 'object') {
+        return;
+      }
+      Object.keys(data).forEach((key) => {
+        defineReactive(data, key, data[key]);
+      });
+    };
+
+    function Dep() {
+      this.subs = [];
+    }
+    Dep.prototype = {
+      addSub(sub) {
+        this.subs.push(sub);
+      },
+      notify() {
+        this.subs.forEach((sub) => {
+          sub.update();
+        });
+      },
+    };
+    // 实现watcher
+    function Watcher(vm, exp, cb) {
+      this.cb = cb;
+      this.vm = vm;
+      this.exp = exp;
+      this.value = this.get(); // 将自己添加到订阅器的操作
+    }
+
+    Watcher.prototype = {
+      update() {
+        this.run();
+      },
+      run() {
+        const value = this.vm.data[this.exp];
+        const oldVal = this.value;
+        if (value !== oldVal) {
+          this.value = value;
+          this.cb.call(this.vm, value, oldVal);
+        }
+      },
+      get() {
+        Dep.target = this; // 缓存自己
+        const value = this.vm.data[this.exp]; // 强制执行监听器里的get函数
+        Dep.target = null; // 释放自己
+        return value;
+      },
+    };
+
+
+    // 添加compile
+    function Compile(el, vm) {
+      this.vm = vm;
+      this.el = document.querySelector(el);
+      this.fragment = null;
+      this.init();
+    }
+
+    Compile.prototype = {
+      init() {
+        if (this.el) {
+          this.fragment = this.nodeToFragment(this.el);
+          this.compileElement(this.fragment);
+          this.el.appendChild(this.fragment);
+        } else {
+          console.log('Dom元素不存在');
+        }
+      },
+      nodeToFragment(el) {
+        const fragment = document.createDocumentFragment();
+        let child = el.firstChild;
+        while (child) {
+          // 将Dom元素移入fragment中
+          fragment.appendChild(child);
+          child = el.firstChild;
+        }
+        return fragment;
+      },
+      compileElement(el) {
+        const {
+          childNodes,
+        } = el;
+        const self = this;
+        [].slice.call(childNodes).forEach((node) => {
+          const reg = /\{\{(.*)\}\}/;
+          const text = node.textContent;
+
+          if (self.isElementNode(node)) {
+            self.compile(node);
+          } else if (self.isTextNode(node) && reg.test(text)) {
+            self.compileText(node, reg.exec(text)[1]);
+          }
+
+          if (node.childNodes && node.childNodes.length) {
+            self.compileElement(node);
+          }
+        });
+      },
+      compile(node) {
+        const nodeAttrs = node.attributes;
+        const self = this;
+        Array.prototype.forEach.call(nodeAttrs, (attr) => {
+          const attrName = attr.name;
+          if (self.isDirective(attrName)) {
+            const exp = attr.value;
+            const dir = attrName.substring(2);
+            if (self.isEventDirective(dir)) { // 事件指令
+              self.compileEvent(node, self.vm, exp, dir);
+            } else { // v-model 指令
+              self.compileModel(node, self.vm, exp, dir);
+            }
+            node.removeAttribute(attrName);
+          }
+        });
+      },
+      compileText(node, exp) {
+        const self = this;
+        const initText = this.vm[exp];
+        this.updateText(node, initText);
+        new Watcher(this.vm, exp, ((value) => {
+          self.updateText(node, value);
+        }));
+      },
+      compileEvent(node, vm, exp, dir) {
+        const eventType = dir.split(':')[1];
+        const cb = vm.methods && vm.methods[exp];
+
+        if (eventType && cb) {
+          node.addEventListener(eventType, cb.bind(vm), false);
+        }
+      },
+      compileModel(node, vm, exp, dir) {
+        const self = this;
+        let val = this.vm[exp];
+        this.modelUpdater(node, val);
+        new Watcher(this.vm, exp, ((value) => {
+          self.modelUpdater(node, value);
+        }));
+
+        node.addEventListener('input', (e) => {
+          const newValue = e.target.value;
+          if (val === newValue) {
+            return;
+          }
+          self.vm[exp] = newValue;
+          val = newValue;
+        });
+      },
+      updateText(node, value) {
+        node.textContent = typeof value === 'undefined' ? '' : value;
+      },
+      modelUpdater(node, value, oldValue) {
+        node.value = typeof value === 'undefined' ? '' : value;
+      },
+      isDirective(attr) {
+        return attr.indexOf('v-') == 0;
+      },
+      isEventDirective(dir) {
+        return dir.indexOf('on:') === 0;
+      },
+      isElementNode(node) {
+        return node.nodeType == 1;
+      },
+      isTextNode(node) {
+        return node.nodeType == 3;
+      },
+    };
+
+    function SelfVue(options) {
+      const self = this;
+      this.data = options.data;
+      this.methods = options.methods;
+
+      Object.keys(this.data).forEach((key) => {
+        self.proxyKeys(key);
+      });
+
+      observe(this.data);
+      new Compile(options.el, this);
+      options.mounted.call(this); // 所有事情处理好后执行mounted函数
+    }
+
+    SelfVue.prototype = {
+      proxyKeys(key) {
+        const self = this;
+        Object.defineProperty(this, key, {
+          enumerable: false,
+          configurable: true,
+          get: function getter() {
+            return self.data[key];
+          },
+          set: function setter(newVal) {
+            self.data[key] = newVal;
+          },
+        });
+      },
+    };
+    new SelfVue({
+      el: '#app',
+      data: {
+        title: 'hello world',
+        name: 'canfoo',
+      },
+      methods: {
+        clickMe() {
+          this.title = 'hello world';
+        },
+      },
+      mounted() {
+        window.setTimeout(() => {
+          this.title = '你好';
+        }, 1000);
+  },
+    });
+  </script>
+</body>
+
+</html>

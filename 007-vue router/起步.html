@@ -1,0 +1,62 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-02-21 17:31:10
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!--
+ * @Description: -;7778oo
+ * @Author: alysalu@tencent.com
+ * @Date: 2022-02-20 08:42:41
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>Hello App!</h1>
+    <p>
+      <!--使用 router-link 组件进行导航 -->
+      <!--通过传递 `to` 来指定链接 -->
+      <!--`<router-link>` 将呈现一个带有正确 `href` 属性的 `<a>` 标签-->
+      <router-link to="/">Go to Home</router-link>
+      <router-link to="/user/1">Go to user</router-link>
+      <router-link to="/about">Go to About</router-link>
+    </p>
+    <router-view></router-view>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+
+<script>
+  const User = {
+    template: '<div>User</div>',
+  };
+
+  const router = new VueRouter({
+    routes: [
+      // 动态路径参数 以冒号开头
+      {
+        path: '/user/:id',
+        component: User,
+      },
+    ],
+  });
+  const app = new Vue({
+    el: '#app',
+    data: {},
+    router,
+  });
+</script>

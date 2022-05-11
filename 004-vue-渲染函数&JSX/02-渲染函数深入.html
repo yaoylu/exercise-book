@@ -1,0 +1,67 @@
+<!--
+ * @Description: 
+ * @Author: alysalu@tencent.com
+ * @Date: 2022-02-19 23:00:26
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <anchored-heading :level="1">Hello world!</anchored-heading>
+    <anchored-heading :level="2">Hello world!</anchored-heading>
+    <anchored-heading :level="3">Hello world!</anchored-heading>
+    <anchored-heading :level="4">Hello world!</anchored-heading>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+  const getChildrenTextContent = function (children) {
+    return children.map(node => (node.children
+      ? getChildrenTextContent(node.children)
+      : node.text)).join('');
+  };
+
+  Vue.component('anchored-heading', {
+    render(createElement) {
+      // 创建 kebab-case 风格的 ID
+      const headingId = getChildrenTextContent(this.$slots.default)
+        .toLowerCase()
+        .replace(/\W+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+      return createElement(
+        `h${this.level}`,
+        [
+          createElement('a', {
+            attrs: {
+              name: headingId,
+              href: `#${headingId}`,
+            },
+          }, this.$slots.default),
+        ],
+      );
+    },
+    props: {
+      level: {
+        type: Number,
+        required: true,
+      },
+    },
+  });
+  const app = new Vue({
+    el: '#app',
+    data: {},
+  });
+</script>

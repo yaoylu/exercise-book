@@ -1,0 +1,60 @@
+<!--
+ * @Description: 
+ * @Author: alysalu@tencent.com
+ * @Date: 2022-02-20 00:05:18
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+    <div id="example">
+      <!-- <p>{{message}}<p> -->
+      <br>
+      <p>      <example2></example2></p>
+
+    </div>
+
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+  console.clear();
+  Vue.component('example2', {
+  template: '<span>{{ message }}</span><button>toggle</button',
+  data() {
+      return {
+        message: '未更新',
+      };
+  },
+  methods: {
+      updateMessage() {
+        this.message = '已更新';
+        console.log(this.$el.textContent); // => '未更新'
+        this.$nextTick(function () {
+          console.log(this.$el.textContent); // => '已更新'
+        });
+      },
+  },
+});
+  const vm = new Vue({
+    el: '#example',
+    data: {
+      message: '123',
+    },
+  });
+  vm.message = 'new message'; // 更改数据
+  console.log(vm.$el.textContent === 'new message'); // false
+  Vue.nextTick(() => {
+    console.log(vm.$el.textContent === 'new message'); // true
+  });
+</script>

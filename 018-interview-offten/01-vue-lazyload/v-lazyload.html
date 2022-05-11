@@ -1,0 +1,80 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-04-14 14:07:08
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    img {
+      width: 500px;
+      height: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <p v-for="(item,i) in imgs " :key="i">
+      <img v-lazyload="item">
+    </p>
+
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script>
+  Vue.directive('lazyload', {
+    bind(el, binding) {
+      const lazyImgObserver = new IntersectionObserver((changes, observer) => {
+        changes.forEach((changeEntry, index) => {
+          const imgEle = changeEntry.target;
+          if (changeEntry.intersectionRatio > 0) {
+            imgEle.src = binding.value;
+            lazyImgObserver.unobserve(imgEle);
+          }
+        });
+      });
+      lazyImgObserver.observe(el);
+    },
+  });
+  const app = new Vue({
+    el: '#app',
+    data: {
+      imgs: [
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/595c69d69a6a3822aa0e2d30fa71b9bf.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/3b9a850ffc6aad6a9d117d333c7cea99.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/f1de79380c78184afcea3ff3129c1d43.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/e704b996465acb7ebd4ee74ac8678b82.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/611e0ef2f3e93d213d39067232561d30.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/b425c2a6d99b03796009d072b1904770.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/595c69d69a6a3822aa0e2d30fa71b9bf.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/3b9a850ffc6aad6a9d117d333c7cea99.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/f1de79380c78184afcea3ff3129c1d43.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/e704b996465acb7ebd4ee74ac8678b82.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/611e0ef2f3e93d213d39067232561d30.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/b425c2a6d99b03796009d072b1904770.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/595c69d69a6a3822aa0e2d30fa71b9bf.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/3b9a850ffc6aad6a9d117d333c7cea99.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/f1de79380c78184afcea3ff3129c1d43.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/e704b996465acb7ebd4ee74ac8678b82.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/611e0ef2f3e93d213d39067232561d30.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/b425c2a6d99b03796009d072b1904770.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/595c69d69a6a3822aa0e2d30fa71b9bf.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/3b9a850ffc6aad6a9d117d333c7cea99.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/f1de79380c78184afcea3ff3129c1d43.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/e704b996465acb7ebd4ee74ac8678b82.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/611e0ef2f3e93d213d39067232561d30.jpg',
+        'https://aiteacher-teaching-resource-1251316161.file.myqcloud.com/public/edudata/test/video_dubbing/v4/img/b425c2a6d99b03796009d072b1904770.jpg',
+      ],
+    },
+  });
+</script>

@@ -1,0 +1,51 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-02-23 17:37:30
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div class="flex-container">
+    <div class="first">1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+  </div>
+</body>
+</html>
+<style>
+  .flex-container{
+    background-color: aqua;
+    display: flex;
+    flex-direction: row-reverse;
+    /* height: 100vh; */
+    justify-content: space-around;
+    /* align-items: baseline; */
+    height: 1000px;
+    flex-wrap: wrap;
+    align-content: space-between;
+  }
+  .flex-container > div{
+    background-color: aliceblue;
+    width:100px;
+    padding: 20px;
+    margin:10px;
+    font-size: 30px;
+    text-align: center;
+    line-height: 100px;
+  }
+  /* .flex-container .first{
+    width: 30px;
+    line-height: 200px;
+
+  } */
+</style>

@@ -1,0 +1,82 @@
+<!--
+ * @Description: 
+ * @Author: alysalu@tencent.com
+ * @Date: 2022-03-02 09:38:14
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+
+<script>
+
+// 手写Storage
+
+// function StorageBase() {}
+// StorageBase.prototype.getItem = function (key) {
+//   return localStorage.getItem(key);
+// };
+// StorageBase.prototype.setItem = function (key, value) {
+//   return localStorage.setItem(key, value);
+// };
+// const Storage = (function () {
+//   let instance = null;
+//   return function () {
+//     if (instance) return instance;
+//     instance = new StorageBase();
+//     return instance;
+//   };
+// }());
+
+// const storage1 = new Storage();
+// const storage2 = new Storage();
+
+// storage1.setItem('name', '李雷');
+// // 李雷
+// console.log(storage1.getItem('name'));
+// // 也是李雷
+// console.log(storage2.getItem('name'));
+
+
+// // 返回true
+// console.log(storage1 === storage2);
+
+// 手写单例模式
+class Storage {
+  constructor() {
+    this.instance = null;
+  }
+  getItem(key) {
+    return localStorage.getItem(key);
+  };
+  setItem(key, value) {
+    return localStorage.setItem(key, value);
+  }
+  static getInstance() {
+    if (this.instance) return this.instance;
+    this.instance = new Storage();
+    return this.instance;
+  }
+}
+const storage1 = Storage.getInstance();
+const storage2 = Storage.getInstance();
+
+storage1.setItem('name', '李雷');
+// 李雷
+console.log(storage1.getItem('name'));
+// 也是李雷
+console.log(storage2.getItem('name'));
+
+
+// 返回true
+console.log(storage1 === storage2);
+
+</script>
+</body>
+</html>

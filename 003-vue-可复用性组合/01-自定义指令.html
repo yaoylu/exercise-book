@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div id="hook-arguments-example" v-demo:foo.a.b="message"></div>
+
+  </div>
+  <div id="baseexample">
+    <p>Scroll down the page</p>
+    <p v-pin="200">Stick me 200px from the top of the page</p>
+  </div>
+  <div id="dynamicexample">
+    <h3>Scroll down inside this section ↓</h3>
+    <p v-pin:[direction]="200">I am pinned onto the page at 200px to the left.</p>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+  Vue.directive('demo', {
+    bind(el, binding, vnode) {
+      const s = JSON.stringify;
+      el.innerHTML = `name: ${s(binding.name)}<br>`
+      + `value: ${s(binding.value)}<br>`
+      + `expression: ${s(binding.expression)}<br>`
+      + `argument: ${s(binding.arg)}<br>`
+      + `modifiers: ${s(binding.modifiers)}<br>`
+      + `vnode keys: ${Object.keys(vnode).join(', ')}`;
+    },
+  });
+
+
+  const app = new Vue({
+    el: '#hook-arguments-example',
+    data: {
+      message: 'hello!',
+    },
+  });
+  Vue.directive('pin', {
+    bind(el, binding, vnode) {
+      el.style.position = 'fixed';
+      el.style.top = `${binding.value}px`;
+    },
+  });
+  new Vue({
+    el: '#baseexample',
+  });
+
+  Vue.directive('pin', {
+    bind(el, binding, vnode) {
+      el.style.position = 'fixed';
+      const s = (binding.arg == 'left' ? 'left' : 'top');
+      el.style[s] = `${binding.value}px`;
+    },
+  });
+
+  new Vue({
+    el: '#dynamicexample',
+    data() {
+      return {
+        direction: 'left',
+      };
+    },
+  });
+</script>

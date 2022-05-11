@@ -1,0 +1,102 @@
+<!--
+ * @Description: 
+ * @Author: alysalu(alysalu@tencent.com)
+ * @Date: 2022-02-18 14:24:15
+ * @LastEditors: alysalu(alysalu@tencent.com)
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div id="example1">
+      <input v-model.trim="message1" placeholder="edit me">
+      <p>Message1 is: {{ message1 }}</p>
+      <input value="message1" placeholder="edit me">
+    </div>
+    <br>
+    <div id="example2">
+      <textarea v-model="message2" placeholder="add multiple lines">test</textarea>
+      <br>
+      <span>Multiline message2 is:</span>
+      <p style="white-space: pre-line;">{{ message2 }}</p>
+      <br>
+      <textarea placeholder="add multiple lines" value="god">tst
+asd
+fe</textarea>
+    </div>
+    <br>
+    <div id="example3">
+      <input type="checkbox" id="single" value="single" v-model="single">
+      <label for="single">{{ single }}</label>
+      <br>
+      <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+      <label for="jack">Jack</label>
+      <input type="checkbox" id="john" value="John" v-model="checkedNames">
+      <label for="john">John</label>
+      <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+      <label for="mike">Mike</label>
+      <span>Checked names: {{ checkedNames }}</span>
+    </div>
+    <br>
+    <div id="example-4">
+      <input type="radio" id="one" value="One" v-model="picked">
+      <label for="one">One</label>
+      <br>
+      <input type="radio" id="two" value="Two" v-model="picked">
+      <label for="two">Two</label>
+      <br>
+      <input type="radio" id="three" value="Three" v-model="picked">
+      <label for="three">Three</label>
+      <br>
+      <span>Picked: {{ picked }}</span>
+    </div><br>
+    <div id="example-5">
+      <select v-model="selected">
+        <option disabled value="">请选择</option>
+        <option value="va">A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <span>Selected: {{ selected }}</span>
+    </div><br>
+    <div id="example-6">
+      <select v-model="selected2" multiple style="width: 50px;">
+        <option>A</option>
+        <option>B</option>
+        <option>C</option>
+      </select>
+      <br>
+      <span>Selected2: {{ selected2 }}</span>
+    </div><br>
+    <div id="example7">
+      <input type="checkbox" id="example7checkbox" v-model="toggle" true-value="yes" false-value="no">
+      <label for="example7checkbox">{{toggle}}</label>
+    </div>
+  </div>
+</body>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+<script>
+  const vm = new Vue({
+    el: '#app',
+    data: {
+      message1: '',
+      message2: '',
+      checkedNames: [],
+      single: ['single'],
+      picked: 'One',
+      selected: '',
+      selected2: [],
+      toggle: 'yes',
+    },
+  });
+</script>
