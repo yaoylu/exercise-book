@@ -1,6 +1,9 @@
+
 import logo from './logo.svg';
 import './App.css';
 import { FilterableProductTable } from './components/FilterableProductTable';
+import { ThemedToolbar } from './components/ThemedToolbar';
+import { ThemedToolbarContext } from './components/ThemedToobarContext';
 function App() {
   const PRODUCTS = [
     { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
@@ -27,6 +30,8 @@ function App() {
         </a>
       </header>
       <FilterableProductTable products ={PRODUCTS} />
+      <ThemedToolbar theme="dark"/>
+      <ThemedToolbarContext theme="dark"/>
     </div>
   );
 }
