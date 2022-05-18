@@ -4,6 +4,8 @@ import './App.css';
 import { FilterableProductTable } from './components/FilterableProductTable';
 import { ThemedToolbar } from './components/ThemedToolbar';
 import { ThemedToolbarContext } from './components/ThemedToobarContext';
+import { ThemedToolbarContextComplex } from './components/ThemedToobarContextComplex';
+import { ThemedToolbarContextDeep } from './components/ThemedToobarContextDeep';
 function App() {
   const PRODUCTS = [
     { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
@@ -32,6 +34,9 @@ function App() {
       <FilterableProductTable products ={PRODUCTS} />
       <ThemedToolbar theme="dark"/>
       <ThemedToolbarContext theme="dark"/>
+      <ThemedToolbarContextComplex></ThemedToolbarContextComplex>
+      <ThemedToolbarContextDeep></ThemedToolbarContextDeep>
+
     </div>
   );
 }
