@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "eslint-config-tencent"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+      },
+      "ecmaVersion": 6,
+      "sourceType": "module"
+  },
+  "rules": {
+    "linebreak-style":"off",
+    "function-paren-newline":"off"
+  }
+}
