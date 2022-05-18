@@ -6,6 +6,7 @@ import { ThemedToolbar } from './components/ThemedToolbar';
 import { ThemedToolbarContext } from './components/ThemedToobarContext';
 import { ThemedToolbarContextComplex } from './components/ThemedToobarContextComplex';
 import { ThemedToolbarContextDeep } from './components/ThemedToobarContextDeep';
+import { ThemedToolbarContextFunction } from './components/ThemedToolbarContextFunction';
 function App() {
   const PRODUCTS = [
     { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
@@ -36,6 +37,7 @@ function App() {
       <ThemedToolbarContext theme="dark"/>
       <ThemedToolbarContextComplex></ThemedToolbarContextComplex>
       <ThemedToolbarContextDeep></ThemedToolbarContextDeep>
+      <ThemedToolbarContextFunction></ThemedToolbarContextFunction>
 
     </div>
   );
