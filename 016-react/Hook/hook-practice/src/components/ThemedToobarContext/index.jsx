@@ -16,9 +16,8 @@ class ThemedButton extends React.Component {
 }
 
 class Button extends React.Component {
-  static contextType = themeContext;
+  // static contextType = themeContext;
   render() {
-    console.log(this.context);
     let style = { color: 'white' };
     if (this.context === 'dark') {
       style = { color: 'blue' };
@@ -26,3 +25,4 @@ class Button extends React.Component {
     return <button style={style}>ContextBotton</button>;
   }
 }
+Button.contextType = themeContext;
