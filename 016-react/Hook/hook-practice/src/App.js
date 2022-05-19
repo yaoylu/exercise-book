@@ -7,6 +7,13 @@ import { ThemedToolbarContext } from './components/ThemedToobarContext';
 import { ThemedToolbarContextComplex } from './components/ThemedToobarContextComplex';
 import { ThemedToolbarContextDeep } from './components/ThemedToobarContextDeep';
 import { ThemedToolbarContextFunction } from './components/ThemedToolbarContextFunction';
+import { Example, Counter, Parent } from './components/Example';
+import { ExampleClass, CounterClass } from './components/ExampleClass';
+import StateFunction from './components/StateFunction';
+import { ExampleUseRef } from './components/ExampleUseRef';
+import { ExampleUseContext } from './components/ExampleUseContext';
+import { ExampleUseReducer } from './components/ExampleUseReducer';
+
 function App() {
   const PRODUCTS = [
     { category: 'Sporting Goods', price: '$49.99', stocked: true, name: 'Football' },
@@ -38,7 +45,15 @@ function App() {
       <ThemedToolbarContextComplex></ThemedToolbarContextComplex>
       <ThemedToolbarContextDeep></ThemedToolbarContextDeep>
       <ThemedToolbarContextFunction></ThemedToolbarContextFunction>
-
+      <Parent></Parent>
+        <Example></Example>
+        <Counter></Counter>
+        <ExampleClass></ExampleClass>
+        <CounterClass></CounterClass>
+        <StateFunction></StateFunction>
+        <ExampleUseRef></ExampleUseRef>
+        <ExampleUseContext></ExampleUseContext>
+        <ExampleUseReducer></ExampleUseReducer>
     </div>
   );
 }
