@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    .container {
+      width: 500px;
+      height: 500px;
+      background-color: #000;
+      color: #fff;
+      transform: scale(1); 
+      /* 给container创建层叠上下文 */
+    }
+    .div1 {
+      padding: 50px;
+      background-color: aqua;
+      z-index: 0;
+      position: relative;
+      /* 给div1创建层叠上下文，层叠水平依赖z-index的取值 */
+    }
+    .div2 {
+      padding: 50px;
+      background-color: red;
+      opacity: 0.8;
+      /* 给div2创建层叠上下文，层叠水平依赖z-index的取值 */
+      /* margin-top: -40px; */
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="div1">111</div>
+        <div class="div2">222</div>
+    </div>
+  
+</body>
+</html>l

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幻灯片</title>
+    <style>
+        .ani{
+            width:480px;
+            height:320px;
+            margin:50px auto;
+            overflow: hidden;
+            box-shadow:0 0 5px rgba(0,0,0,1);
+            background-size: cover;
+            background-position: center;
+            animation-name: loops;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            }
+@keyframes loops {
+    0% {
+        background:url(https://pic.rmb.bdstatic.com/3d926ecb08e8e9edca1b412479b2d01c.jpeg) no-repeat;             
+    }
+    25% {
+        background:url(http://b.hiphotos.baidu.com/image/w%3D400/sign=edee1572e9f81a4c2632edc9e72b6029/30adcbef76094b364d72bceba1cc7cd98c109dd0.jpg) no-repeat;
+    }
+    50% {
+        background:url(http://b.hiphotos.baidu.com/image/w%3D400/sign=937dace2552c11dfded1be2353266255/d8f9d72a6059252d258e7605369b033b5bb5b912.jpg) no-repeat;
+    }
+    75% {
+        background:url(https://up.deskbizhi.com/pic_360/79/4f/79/794f79d3366920c05e83957e77fa6cfc.jpg) no-repeat;
+    }
+    100% {
+        background:url(https://content.52pk.com/files/allimg/100408/1934333646-4.jpg) no-repeat;
+    }
+}
+    </style>
+</head>
+<body>
+        <div class="ani"></div>
+    
+</body>
+<script>
+    
+</script>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        div.sbidialog {
+            display: initial;
+            position: fixed;
+            top:0;
+            right:0;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+      
+fetch('http://127.0.0.1:5500/024-testing/001-sbidialog/res.text', {
+  headers: {
+    accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'accept-language': 'en-US,en;q=0.9',
+    'cache-control': 'no-cache',
+    pragma: 'no-cache',
+    'sec-ch-ua': '"Microsoft Edge";v="107", "Chromium";v="107", "Not=A?Brand";v="24"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"Windows"',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'none',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+  },
+  referrerPolicy: 'strict-origin-when-cross-origin',
+  body: null,
+  method: 'GET',
+  mode: 'cors',
+  credentials: 'omit',
+}).then(response => response.body.getReader().read())
+  .then((data) => {
+    const utf8Decoder = new TextDecoder('utf-8');
+    return  utf8Decoder.decode(data.value);
+  })
+  .then((r) => {
+          // constants
+          const innerHtml = 'innerHTML';
+          const scriptTag = 'script';
+          const appendChild = 'appendChild';
+          const length = 'length';
+          const srcAttribute = 'src';
+
+          const div = document.createElement('div');
+
+          div[innerHtml] = `<br>${r}`;
+          const { childNodes } = div;
+          div.removeChild(childNodes[0]);
+          const scripts = div.getElementsByTagName(scriptTag);
+
+          for (let i = 0; i < scripts[length]; i++) {
+            const newScript = document.createElement(scriptTag);
+            const oldScript = scripts[i];
+            newScript.type = 'text/javascript';
+            // @ts-ignore
+            if (window && window.NONCE_ID) {
+              // @ts-ignore
+              newScript.nonce = window.NONCE_ID;
+            }
+
+            if (oldScript) {
+              const src = oldScript.getAttribute(srcAttribute);
+              const nonce = oldScript.getAttribute('nonce');
+              if (nonce) {
+                newScript.setAttribute('nonce', nonce);
+              }
+              if (src) {
+                newScript.setAttribute(srcAttribute, src);
+              } else {
+                newScript.text = oldScript[innerHtml];
+              }
+
+              oldScript.parentNode.replaceChild(newScript, oldScript);
+            }
+          }
+
+          div.id = 'sbicom';
+          // while (childNodes[length]) {
+          //     newDiv[appendChild](childNodes[0]);
+          // }
+          document.body.append(div);
+  });
+</script>
+</body>
+</html>

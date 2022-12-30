@@ -10,4 +10,11 @@ module.exports = {
   plugins: [
     'html',
   ],
+  rules: {
+    '@typescript-eslint/no-empty-interface': 0,
+    'jsx-quotes': ['error', 'prefer-double'],
+    'no-trailing-spaces': 'error',
+    'linebreak-style': ['error', 'windows'],
+    'no-underscore-dangle': 'off',
+  },
 };
