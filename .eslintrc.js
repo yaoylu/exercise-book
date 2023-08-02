@@ -2,7 +2,7 @@
 module.exports = {
 
   extends: [
-    'eslint-config-tencent',
+    // 'eslint-config-tencent',
   ],
   parserOptions: {
     parser: 'babel-eslint',
