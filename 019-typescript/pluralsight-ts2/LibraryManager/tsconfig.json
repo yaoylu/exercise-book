@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "ES2015",
         "outDir": "js",
         "module": "commonjs",
-        "sourceMap": true
+        "sourceMap": true,
+        "experimentalDecorators": true
     },
     "files": [
         "app.ts"

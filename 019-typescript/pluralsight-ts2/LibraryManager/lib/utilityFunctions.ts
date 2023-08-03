@@ -1,5 +1,5 @@
-import { Category } from '../enums';
-import { Book, Magazine } from '../interfaces';
+import { Category } from "../enums";
+import { Book, Magazine } from "../interfaces";
 
 export function CalculateLateFee(daysLate: number): number {
     return daysLate * .25;
@@ -14,7 +14,7 @@ export function MaxBooksAllowed(age: number): number {
 }
 
 function privateFunc(): void {
-    console.log('This is private...');
+    console.log("This is private...");
 }
 
 export function Purge<T>(inventory: Array<T>): Array<T> {
@@ -25,10 +25,10 @@ export function Purge<T>(inventory: Array<T>): Array<T> {
 export function GetAllBooks(): Book[] {
 
 	const books = [
-		{ id: 1, title: 'Ulysses', author: 'James Joyce', available: true, category: Category.Fiction },
-		{ id: 2, title: 'A Farewell to Arms', author: 'Ernest Hemingway', available: false, category: Category.Fiction },
-		{ id: 3, title: 'I Know Why the Caged Bird Sings', author: 'Maya Angelou', available: true, category: Category.Poetry },
-		{ id: 4, title: 'Moby Dick', author: 'Herman Melville', available: true, category: Category.Fiction }
+		{ id: 1, title: "Ulysses", author: "James Joyce", available: true, category: Category.Fiction },
+		{ id: 2, title: "A Farewell to Arms", author: "Ernest Hemingway", available: false, category: Category.Fiction },
+		{ id: 3, title: "I Know Why the Caged Bird Sings", author: "Maya Angelou", available: true, category: Category.Poetry },
+		{ id: 4, title: "Moby Dick", author: "Herman Melville", available: true, category: Category.Fiction }
 	];
 
 	return books;
@@ -37,10 +37,10 @@ export function GetAllBooks(): Book[] {
 export function GetAllMagazines(): Magazine[] {
 
 	const magazines: Magazine[] = [
-		{ title: 'Python Programmer Review', publisher: 'Smarty Publishing' },
-		{ title: 'Five Points', publisher: 'Georgia State University' },
-		{ title: 'Poetry Quarterly', publisher: 'Literary Press' },
-		{ title: 'Baseball News', publisher: 'Sports Press' }
+		{ title: "Python Programmer Review", publisher: "Smarty Publishing" },
+		{ title: "Five Points", publisher: "Georgia State University" },
+		{ title: "Poetry Quarterly", publisher: "Literary Press" },
+		{ title: "Baseball News", publisher: "Sports Press" }
 	];
 
 	return magazines;
@@ -49,7 +49,7 @@ export function GetAllMagazines(): Magazine[] {
 export function LogFirstAvailable(books = GetAllBooks()): void {
 
 	const numberOfBooks: number = books.length;
-	let firstAvailable: string = '';
+	let firstAvailable: string = "";
 
 	for(const currentBook of books) {
 
@@ -59,13 +59,13 @@ export function LogFirstAvailable(books = GetAllBooks()): void {
 		}
 	}
 
-	console.log('Total Books: ' + numberOfBooks);
-	console.log('First Available: ' + firstAvailable);
+	console.log("Total Books: " + numberOfBooks);
+	console.log("First Available: " + firstAvailable);
 }
 
 export function GetBookTitlesByCategory(categoryFilter: Category = Category.Fiction): Array<string> {
 
-	console.log('Getting books in category: ' + Category[categoryFilter]);
+	console.log("Getting books in category: " + Category[categoryFilter]);
 
 	const allBooks = GetAllBooks();
 	const filteredTitles: string[] = [];
@@ -96,20 +96,20 @@ export function CreateCustomerID(name: string, id: number): string {
 }
 
 export function CreateCustomer(name: string, age?: number, city?: string): void {
-	console.log('Creating customer ' + name);
+	console.log("Creating customer " + name);
 
 	if(age) {
-		console.log('Age: ' + age);
+		console.log("Age: " + age);
 	}
 
 	if(city) {
-		console.log('City: ' + city);
+		console.log("City: " + city);
 	}
 }
 
 export function CheckoutBooks(customer: string, ...bookIDs: number[]): string[] {
 
-	console.log('Checking out books for ' + customer);
+	console.log("Checking out books for " + customer);
 
 	const booksCheckedOut: string[] = [];
 
@@ -129,14 +129,14 @@ export function GetTitles(bookProperty: any): string[] {
 	const allBooks = GetAllBooks();
 	const foundTitles: string[] = [];
 
-	if(typeof bookProperty == 'string') {
+	if(typeof bookProperty == "string") {
 		// get all books by a particular author
 		for(const book of allBooks) {
 			if(book.author === bookProperty) {
 				foundTitles.push(book.title);
 			}
 		}
-	} else if(typeof bookProperty == 'boolean') {
+	} else if(typeof bookProperty == "boolean") {
 		// get all books based on specified availability
 		for(const book of allBooks) {
 			if(book.available === bookProperty) {
@@ -148,5 +148,7 @@ export function GetTitles(bookProperty: any): string[] {
 }
 
 export function PrintBook(book: Book): void {
-    console.log(book.title + ' by ' + book.author);
+	const {title, author} = book;
+    console.log(title + " by " + author);
 }
+
