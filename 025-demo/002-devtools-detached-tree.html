@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DetachedTree</title>
+</head>
+<body>
+    <button id="create">create</button>
+</body>
+<script>
+    let detachedTree;
+    function create() {
+        const ul = document.createElement('ul');
+        for (let i = 0; i < 10; i++) {
+            const li = document.createElement('li');
+            ul.appendChild(li);
+        }
+        detachedTree = ul;
+    }
+
+document.getElementById('create').addEventListener('click', create);
+</script>
+</html>
