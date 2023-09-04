@@ -1,6 +1,6 @@
 class Greeter {
     static standardGreeting = "Hello, there";
-    greeting: string;
+    greeting?: string;
     greet() {
         if (this.greeting) {
             return "Hello, " + this.greeting;
