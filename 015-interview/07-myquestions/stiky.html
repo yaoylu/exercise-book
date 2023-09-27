@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+<body>
+    <div class="header">header</div>
+    <div class="content-container">
+        <div class="content">
+            <div class="question">我的提问</div>
+            <div class="answer">我的回答</div>
+            <div class="end">end</div>
+        </div>
+    </div>
+    <div class="footer">footer</div>
+</body>
+<script >
+    console.log('hello')
+</script>
+<style>
+    body{
+        margin: 0;
+        padding: 0;
+    }
+    .header{
+        height: 100px;
+        background-color: red;
+    }
+    .content-container {
+        height: calc(100vh - 200px);
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+        outline: none;
+        -ms-overflow-style: none;
+        /* position: absolute;
+        top: 300px; */
+    }
+    .content{
+        flex: 1;
+        /* overflow-y: scroll; */
+    }
+    .footer{
+        height: 100px;
+        background-color: blue;
+    }
+    .question{
+        height: 2000px;
+        background-color: yellow;
+    }
+    /* 隐藏滚动条 */
+.content-container::-webkit-scrollbar {
+  width: 0.1rem; /* 宽度设置为尽可能小 */
+}
+
+/* 隐藏滚动条轨道 */
+.content-container::-webkit-scrollbar-track {
+  display: none;
+}
+
+/* 隐藏滚动条滑块 */
+.content-container::-webkit-scrollbar-thumb {
+  display: none;
+}
+    </style>
+</html>
