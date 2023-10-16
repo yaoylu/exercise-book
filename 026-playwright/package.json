@@ -1,0 +1,24 @@
+{
+  "name": "026-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "testCoverage.js",
+  "scripts": {
+    "test": " node testCoverage.js",
+    "convert-coverage": "puppeteer-to-istanbul coverage.json --output coverage",
+    "report-coverage": "nyc report --reporter=lcov --report-dir=coverage --temp-directory=coverage"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.38.1",
+    "@types/node": "^20.8.4",
+    "nyc": "^15.1.0",
+    "playwright": "^1.38.1",
+    "puppeteer-to-istanbul": "^1.4.0"
+  },
+  "dependencies": {
+    "v8-to-istanbul": "^9.1.3"
+  }
+}

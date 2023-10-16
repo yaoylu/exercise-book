@@ -11,13 +11,12 @@ console.log("Object instanceof Object:", Object instanceof Object);
 console.log("Function instanceof Object:", Function instanceof Object);
 console.log("Object instanceof Array:", Object instanceof Array);
 console.log("Array instanceof Function:", Array instanceof Function);
-console.log("Function === Object:", Function === Object);
-console.log("Function.__proto__ === Object.__proto__:", Function.__proto__ === Object.__proto__);
-console.log("Function.__proto__:", Function.__proto__);
+console.log("Function.__proto__ === Array.__proto__:", Function.__proto__ === Array.__proto__);
+console.log("Function.prototype.__proto__ === Object.prototype:", Function.prototype.__proto__ === Object.prototype);
+console.log("Object.prototype.__proto__", Object.prototype.__proto__);
 console.log("Object.__proto__:", Object.__proto__);
-console.log("Object.__proto_=== Object.prototype:", Object.__proto__ === Object.prototype); // false
-console.log("Function.prototype === Object.prototype:", Function.prototype === Object.prototype);// false
-console.log("Function.prototype.__proto__ === Object.prototype:", Function.prototype.__proto__ === Object.prototype);// true
+console.log("Object.__proto__=== Object.prototype:", Object.__proto__ === Object.prototype);
+console.log("Function.prototype === Object.prototype:", Function.prototype === Object.prototype);
 
 console.log("new Object() instanceof Object:", new Object() instanceof Object);
 console.log("new Function() instanceof Function:", new Function() instanceof Function);

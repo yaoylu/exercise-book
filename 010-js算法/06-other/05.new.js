@@ -110,3 +110,24 @@ const s = curriedJoin(1, 2, 3);
 console.log(s);
 console.log(curriedJoin(1)(2, 3));
 console.log(curry(add)(1)(2,3));
+console.log("Start");
+
+setTimeout(function () {
+    console.log("Inside setTimeout 1");
+
+    Promise.resolve().then(function () {
+        console.log("Inside Promise 1");
+    }).then(function () {
+        console.log("Inside Promise 2");
+    });
+}, 0);
+
+Promise.resolve().then(function () {
+    console.log("Inside Promise 3");
+
+    setTimeout(function () {
+        console.log("Inside setTimeout 2");
+    }, 0);
+});
+
+console.log("End");

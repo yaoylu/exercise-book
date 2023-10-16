@@ -8,6 +8,7 @@
 </head>
 <body>
     <div class="header">header</div>
+    <!-- <div class="left">left</div> -->
     <div class="content-container">
         <div class="content">
             <div class="question">我的提问</div>
@@ -24,15 +25,23 @@
     body{
         margin: 0;
         padding: 0;
+        text-align: center;
+        line-height: 100px;
     }
     .header{
         height: 100px;
         background-color: red;
     }
+    /* .left{
+        position:absolute;
+        top:100px;
+        left:0;
+        width: 200px;
+        height: calc(100vh - 200px);
+        background-color: green;
+    } */
     .content-container {
         height: calc(100vh - 200px);
-        display: flex;
-        flex-direction: column;
         overflow-y: scroll;
         outline: none;
         -ms-overflow-style: none;
@@ -40,7 +49,9 @@
         top: 300px; */
     }
     .content{
-        flex: 1;
+        height: 2000px;
+        background-color: lightblue;
+
         /* overflow-y: scroll; */
     }
     .footer{
@@ -48,7 +59,7 @@
         background-color: blue;
     }
     .question{
-        height: 2000px;
+        height: 1000px;
         background-color: yellow;
     }
     /* 隐藏滚动条 */
