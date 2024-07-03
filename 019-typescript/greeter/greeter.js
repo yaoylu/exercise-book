@@ -1,5 +1,6 @@
+"use strict";
 function greeter(person) {
     return "Hello, " + person;
 }
-var user = 'Lisa Lu';
+let user = 'Lisa Lu';
 document.body.innerHTML = greeter(user);

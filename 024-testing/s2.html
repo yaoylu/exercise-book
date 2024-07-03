@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screenshot Example</title>
+<style>
+    h1 {
+        background-color: yellow;
+        color: blue;
+    }
+    /* Define styles as needed */
+</style>
+</head>
+<body>
+
+<div id="areaToCapture">
+    <!-- Content you want to capture -->
+    <h1>Hello, World!</h1>
+    <p>This is the content you want to capture.</p>
+</div>
+
+<button onclick="captureAndDisplay()">Capture and Display</button>
+
+<div id="screenshotContainer">
+    <!-- The captured screenshot will be displayed here -->
+    <img id="screenshotImg" alt="Screenshot">
+</div>
+
+<script>
+function captureAndDisplay() {
+    // Get the element to capture
+    const elementToCapture = document.getElementById('areaToCapture');
+
+    // Get the dimensions of the element
+    const width = elementToCapture.offsetWidth;
+    const height = elementToCapture.offsetHeight;
+
+    // Create a canvas element
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas dimensions to match the element's dimensions
+    canvas.width = width;
+    canvas.height = height;
+
+    // Create an image object from the target element
+    const img = new Image();
+    img.onload = function() {
+        // Draw the image onto the canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Get the data URL representing the canvas content
+        const dataURL = canvas.toDataURL();
+
+        // Display the screenshot in an image element
+        const screenshotImg = document.getElementById('screenshotImg');
+        screenshotImg.src = dataURL;
+    };
+
+    // Set the source of the image to the data URL of the target element
+    img.src = "data:image/svg+xml," +
+        encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '">' +
+            '<foreignObject width="100%" height="100%">' +
+            '<div xmlns="http://www.w3.org/1999/xhtml">' +
+            elementToCapture.innerHTML +
+            '</div>' +
+            '</foreignObject>' +
+            '</svg>');
+}
+// Draw the content of the element onto the canvas
+
+</script>
+
+</body>
+</html>

@@ -4,7 +4,7 @@
 // 我们要将 nums 数组中的每个元素移动到 A 数组 或者 B 数组中，使得 A 数组和 B 数组不为空，并且 average(A) == average(B) 。
 
 // 如果可以完成则返回true ， 否则返回 false  。
-var splitArraySameAverage = function(nums) {
+var splitArraySameAverage = function (nums) {
     if (nums.length === 1) {
         return false;
     }
@@ -49,7 +49,7 @@ var splitArraySameAverage = function(nums) {
     return false;
 };
 
-var splitArraySameAverage2 = function(nums) {
+var splitArraySameAverage2 = function (nums) {
     if (nums.length === 1) {
         return false;
     }
@@ -138,10 +138,10 @@ console.log(curryAdd(2)(3, 4));
 console.log(curryAdd(2, 3)(4));
 
 Function.prototype.myCall = function (context, ...args) {
-    if(typeof context !=="object") {
+    if(typeof context !== "object") {
         context = new Object(context);
     }
-    const key =  Symbol();
+    const key = Symbol();
     context[key] = this;
     const result = context[key](...args);
     delete context[key];
@@ -150,13 +150,13 @@ Function.prototype.myCall = function (context, ...args) {
 function print(str) {
     console.log(`${this.name || ""} ${str}`);
 }
-const obj={
+const obj = {
     name: "obj2"
 };
 print("hello");
 print.myCall(obj,"hello");
 
-var minCut = function(s) {
+var minCut = function (s) {
     const n = s.length;
     const g = new Array(n).fill(0).map(() => new Array(n).fill(true));
 
@@ -183,3 +183,64 @@ var minCut = function(s) {
 };
 console.log(minCut("aabb"));
 
+// 观察订阅者模式
+class EventEmitter {
+    constructor() {
+        this.events = {};
+    }
+    on(eventName, cb) {
+        if(this.events[eventName]) {
+            this.events[eventName].push(cb);
+        }else{
+            this.events[eventName] = [cb];
+        }
+    }
+    emit(eventName, ...args) {
+        if(this.events[eventName]) {
+            const cbs = this.events[eventName];
+            cbs.forEach((cb)=>{
+                cb(...args);
+            });
+        }
+    }
+    off(eventName,cb) {
+        if(this.events[eventName]) {
+            const newcbs = this.events[eventName].filter((c)=>c !== cb);
+            this.events[eventName] = newcbs;
+        }
+    }
+}
+
+function login(...args) {
+    console.log(this, ...args);
+};
+login();
+const em = new EventEmitter();
+em.on("login", login);
+em.emit("login",1,2,3);
+
+function permuteUnique(nums) {
+    const result = [];
+    const visited = Array(nums.length).fill(false);
+    nums.sort((a, b) => a - b);
+    backtrack([], visited);
+    return result;
+
+    function backtrack(path, visited) {
+        if (path.length === nums.length) {
+            result.push([...path]);
+            return;
+        }
+        for (let i = 0; i < nums.length; i++) {
+            if (visited[i] || (i > 0 && nums[i] === nums[i - 1] && !visited[i - 1])) {
+                continue;
+            }
+            path.push(nums[i]);
+            visited[i] = true;
+            backtrack(path, visited);
+            path.pop();
+            visited[i] = false;
+        }
+    }
+}
+console.log(JSON.stringify(permuteUnique([1, 1, 2])));

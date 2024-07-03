@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Analysis Demo</title>
+</head>
+<body>
+<h1>Memory Analysis Demo</h1>
+<button id="createArrayBtn">Create Array</button>
+<button id="clearArrayBtn">Clear Array</button>
+<div class="container"></div>
+<div id="output1"></div>
+<div id="output2"></div>
+<script>
+// 创建一个全局数组
+let myArray = [];
+
+// 创建函数，向数组中添加大量数据
+function createArray() {
+  for (let i = 0; i < 1000000; i++) {
+    myArray.push({ value: i });
+  }
+  // const container = document.querySelector('.container');
+  const container =document.createElement('ul');
+  for (let i = 0; i < 1000; i++) {
+    container.appendChild(document.createElement('div')).classList.add('newDom');
+  }
+  updateOutput();
+}
+
+// 创建函数，清空数组
+function clearArray() {
+  myArray = [];
+  const container = document.querySelector('.container');
+  container.innerHTML = '';
+  updateOutput();
+}
+
+// 更新页面输出
+function updateOutput() {
+  document.getElementById('output1').innerText = 'Array length: ' + myArray.length;
+  document.getElementById('output2').innerText = 'Dom length: ' + document.querySelector('.container').childElementCount;
+}
+
+// 添加事件监听器，点击按钮调用对应函数
+document.getElementById('createArrayBtn').addEventListener('click', createArray);
+document.getElementById('clearArrayBtn').addEventListener('click', clearArray);
+</script>
+</body>
+</html>

@@ -38,13 +38,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const wordList = document.getElementById("word-list");
 
     // Fetch words from the text file
-    fetch("data/lession1.txt")
+    fetch("data/lession1.html")
         .then(response => response.text())
         .then(text => {
             const lines = text.split("\n");
 
             // Display words in the list
-            lines.forEach(line => {
+            lines.forEach((line,index) => {
                 // Splitting the line into word and sentence using regex and split()
                 // march "ABC/DEF:GHI";
                 const match = line.match(/^(?:([^\/]+)\/)?([^:]+):([^:]+)/);
@@ -56,15 +56,22 @@ document.addEventListener("DOMContentLoaded", function () {
                 const pairContainer = document.createElement("div");
                 pairContainer.classList.add("pair-container"); // Add a class for styling if needed
 
+                const idElement = document.createElement("span");
+                idElement.textContent = `${index + 1}.`;
+                idElement.classList.add("id"); // Add a class for styling if needed
+
                 const translationElement = document.createElement("span");
                 translationElement.textContent = translation;
                 translationElement.classList.add("translation"); // Add a class for styling if needed
 
                 const wordElement = document.createElement("span");
-                wordElement.textContent = word;
+                wordElement.textContent = word.trim();
                 wordElement.classList.add("key"); // Add a class for styling if needed
-
+                if(!word.trim().includes(" ")) {
+                    console.log(word.trim());
+                }
                 const sentenceElement = generateSentenceElement(sentence);
+                pairContainer.appendChild(idElement);
                 pairContainer.appendChild(wordElement);
                 pairContainer.appendChild(translationElement);
                 pairContainer.appendChild(sentenceElement);

@@ -7,8 +7,8 @@ body {
   
   .word-container,
   .sentence-container {
-    width: 80%;
-    margin: 20px auto;
+    width: 100%;
+    margin: 0% auto;
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
@@ -39,6 +39,12 @@ body {
     background-color: #f4f4f4;
     margin-right: 5px;
     margin-bottom: 5px;
+  }
+  .id {
+    vertical-align: top;
+    padding: 5px;
+    width: 30px;
+    text-align: right;
   }
   .translation {
     background-color: #fff;

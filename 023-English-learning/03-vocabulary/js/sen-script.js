@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const wordList = document.getElementById("sentence-list");
 
     // Fetch words from the text file
-    fetch("data/sentences.txt")
+    fetch("data/sentences.html")
         .then(response => response.text())
         .then(text => {
             const lines = text.split("\n");
 
             // Display words in the list
-            lines.forEach(line => {
+            lines.forEach((line,index) => {
                 // Splitting the line into word and sentence using regex and split()
                 // march "ABC/DEF:GHI";
                 const match = line.match(/^([^\/]+)\/([^\/]+)/);
@@ -20,7 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const pairContainer = document.createElement("div");
                 pairContainer.classList.add("pair-container"); // Add a class for styling if needed
-
+                const idElement = document.createElement("span");
+                idElement.textContent = `${index + 1}.`;
+                idElement.classList.add("id"); // Add a class for styling if needed
                 const translationElement = document.createElement("span");
                 translationElement.textContent = zh;
                 translationElement.classList.add("key"); // Add a class for styling if needed
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 sentenceElement.textContent = en;
                 sentenceElement.classList.add("value"); // Add a class for styling if needed
                 sentenceElement.classList.add("en-sen"); // Add a class for styling if needed
-
+                pairContainer.appendChild(idElement);
                 pairContainer.appendChild(translationElement);
                 pairContainer.appendChild(sentenceElement);
                 wordList.appendChild(pairContainer);
